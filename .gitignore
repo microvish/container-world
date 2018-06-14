@@ -1,0 +1,8 @@
+# IntelliJ
+*.iml
+.idea/
+
+# maven
+dependency-reduced-pom.xml
+pom.xml.bak
+target/
