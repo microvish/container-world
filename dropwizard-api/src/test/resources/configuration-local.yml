@@ -1,0 +1,19 @@
+server:
+  applicationConnectors:
+  - type: http
+    port: 8080
+  adminConnectors:
+  - type: http
+    port: 8081
+
+logging:
+  level: INFO
+  loggers:
+    com.microvish: DEBUG
+  appenders:
+  - type: console
+    threshold: ALL
+    target: stdout
+    logFormat: "[%d %p %30c{30}] %m%n"
+
+mySecret: ${MY_SECRET}
