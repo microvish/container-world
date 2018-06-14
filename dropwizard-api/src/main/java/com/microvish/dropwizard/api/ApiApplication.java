@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.microvish.dropwizard.api.health.ApiHealthCheck;
 import com.microvish.dropwizard.api.resource.ApiResource;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -49,6 +50,9 @@ public class ApiApplication extends Application<ApiConfiguration> {
         // Register resources
         environment.jersey().register(injector.getInstance(ApiResource.class));
 
+        // HealthCheck registrations
+        environment.healthChecks().register("api", injector.getInstance(ApiHealthCheck.class));
+
         // CORS Filter for WebApp testing: http://software.dzhuvinov.com/cors-filter.html
         final FilterRegistration.Dynamic corsFilter = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
 
@@ -56,6 +60,5 @@ public class ApiApplication extends Application<ApiConfiguration> {
         corsFilter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
         corsFilter.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "*");
         corsFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "*");
-
     }
 }
